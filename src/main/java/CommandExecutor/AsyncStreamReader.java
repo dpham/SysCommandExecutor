@@ -9,17 +9,14 @@ class AsyncStreamReader extends Thread
 {
 	private StringBuffer fBuffer = null;
 	private InputStream fInputStream = null;
-	private String fThreadId = null;
-	private boolean fStop = false;
 	private ILogDevice fLogDevice = null;
 	
 	private String fNewLine = null;
 	
-	public AsyncStreamReader(InputStream inputStream, StringBuffer buffer, ILogDevice logDevice, String threadId)
+	public AsyncStreamReader(InputStream inputStream, StringBuffer buffer, ILogDevice logDevice)
 	{
 		fInputStream = inputStream;
 		fBuffer = buffer;
-		fThreadId = threadId;
 		fLogDevice = logDevice;
 		
 		fNewLine = System.getProperty("line.separator");
@@ -48,24 +45,11 @@ class AsyncStreamReader extends Thread
 			printToDisplayDevice(line);
 		}		
 		bufOut.close();
-//		printToConsole("END OF: " + fThreadId); //DEBUG
-	}
-	
-	public void stopReading() {
-		fStop = true;
 	}
 	
 	private void printToDisplayDevice(String line)
 	{
 		if( fLogDevice != null )
 			fLogDevice.log(line);
-		else
-		{
-//			printToConsole(line);//DEBUG
-		}
-	}
-	
-	private synchronized void printToConsole(String line) {
-		System.out.println(line);
 	}
 }
