@@ -96,13 +96,7 @@ public class SysCommandExecutor
 	
 	private Process runCommandHelper(String commandLine) throws IOException
 	{
-		Process process = null;		
-		if( fWorkingDirectory == null )
-			process = Runtime.getRuntime().exec(commandLine, getEnvTokens());
-		else
-			process = Runtime.getRuntime().exec(commandLine, getEnvTokens(), new File(fWorkingDirectory));
-		
-		return process;
+		return Runtime.getRuntime().exec(commandLine);
 	}
 	
 	private void startOutputAndErrorReadThreads(InputStream processOut, InputStream processErr)

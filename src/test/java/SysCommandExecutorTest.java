@@ -5,18 +5,23 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import CommandExecutor.LogDevice;
 import CommandExecutor.SysCommandExecutor;
 
 public class SysCommandExecutorTest extends TestCase{
+	static final String commandLine = "diff pom.xml README.md";
+//	static final String commandLine = "pwd";
 
 	@Test
 	public void testCommandExecutor() throws Exception {
-		String commandLine = "pwd";
-		SysCommandExecutor cmdExecutor = new SysCommandExecutor();
-		int exitStatus = cmdExecutor.runCommand(commandLine);
 
-		String cmdError = cmdExecutor.getCommandError();
-		String cmdOutput = cmdExecutor.getCommandOutput();
+		SysCommandExecutor cmdExecutor = new SysCommandExecutor();
+		cmdExecutor.setOutputLogDevice(new LogDevice());
+		cmdExecutor.setErrorLogDevice(new LogDevice());
+		cmdExecutor.runCommand(commandLine);
+		
+		assertEquals("", cmdExecutor.getCommandError());
+		assertEquals("", cmdExecutor.getCommandOutput());
 
 	}
 	
@@ -26,7 +31,7 @@ public class SysCommandExecutorTest extends TestCase{
 			try {
 			String ls_str;
 
-			Process ls_proc = Runtime.getRuntime().exec("ls -l");
+			Process ls_proc = Runtime.getRuntime().exec(commandLine);
 
 			// get its output (your input) stream
 

@@ -42,13 +42,13 @@ class AsyncStreamReader extends Thread
 	{		
 		BufferedReader bufOut = new BufferedReader(new InputStreamReader(fInputStream));		
 		String line = null;
-		while ( (fStop == false) && ((line = bufOut.readLine()) != null) )
+		while (((line = bufOut.readLine()) != null))
 		{
 			fBuffer.append(line + fNewLine);
 			printToDisplayDevice(line);
 		}		
 		bufOut.close();
-		//printToConsole("END OF: " + fThreadId); //DEBUG
+//		printToConsole("END OF: " + fThreadId); //DEBUG
 	}
 	
 	public void stopReading() {
@@ -61,7 +61,7 @@ class AsyncStreamReader extends Thread
 			fLogDevice.log(line);
 		else
 		{
-			//printToConsole(line);//DEBUG
+//			printToConsole(line);//DEBUG
 		}
 	}
 	
